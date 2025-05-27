@@ -568,12 +568,12 @@
 		},
 		{
 			"key": "adminemail",
-			"value": "admin@gmail.com",
+			"value": "",
 			"type": "string"
 		},
 		{
 			"key": "adminpass",
-			"value": "admin",
+			"value": "",
 			"type": "string"
 		}
 	]
