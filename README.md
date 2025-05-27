@@ -2,48 +2,50 @@
 
 ## Structure:
 crm/
-├── backend/
-│ ├── .env
-│ ├── pom.xml
-│ ├── src/
-│ │ ├── main/
-│ │ │ ├── java/
-│ │ │ │ └── org/example/crmdemo/
-│ │ │ │ ├── configs/
-│ │ │ │ ├── controllers/
-│ │ │ │ ├── dto/
-│ │ │ │ ├── entities/
-│ │ │ │ ├── enums/
-│ │ │ │ ├── mappers/
-│ │ │ │ ├── repositories/
-│ │ │ │ ├── security/
-│ │ │ │ │ └── filter/
-│ │ │ │ ├── services/
-│ │ │ │ ├── utilities/
-│ │ │ │ └── CrMdemoApplication.java
-│ │ │ └── resources/
-│ │ └── test/
-│ └── target/
-├── frontend/
-│ ├── node_modules/
-│ ├── public/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── interfaces/
-│ │ ├── layouts/
-│ │ ├── pages/
-│ │ ├── router/
-│ │ ├── services/
-│ │ ├── index.css
-│ │ ├── index.tsx
-│ │ └── react-app-env.d.ts
-│ ├── .gitignore
-│ ├── package.json
-│ ├── package-lock.json
-│ ├── README.md
-│ └── tsconfig.json
-├── README.md
-└── CRM.postman_collection.json
+    backend/
+        .env
+        pom.xml
+        src/
+            main/
+                java/
+                    org/example/crmdemo/
+                        configs/
+                        controllers/
+                        dto/
+                        entities/
+                        enums/
+                        mappers/
+                        repositories/
+                        security/
+                            filter/
+                        services/
+                        utilities/
+                        CrMdemoApplication.java
+                resources/
+            test/
+        target/
+    
+    frontend/
+        node_modules/
+        public/
+        src/
+            components/
+            interfaces/
+            layouts/
+            pages/
+            router/
+            services/
+            index.css
+            index.tsx
+            react-app-env.d.ts
+        .gitignore
+        package.json
+        package-lock.json
+        README.md
+        tsconfig.json
+
+    README.md
+    CRM.postman_collection.json
 
 ## Used stack:
 
