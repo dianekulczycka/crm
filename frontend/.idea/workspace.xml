@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9623bd03-ab01-4f63-b96a-db21e5d31167" name="Changes" comment="password form style" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dianekulczycka&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dianekulczycka/crmdemo_front.git&quot;,
+    &quot;accountId&quot;: &quot;29417564-3530-4b68-aa31-11dd3a181455&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2tty9DeVU0m0KyG7mbmI7bcu6Lp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/IdeaProjects/crmdemo_front&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\user\\IdeaProjects\\crmdemo_front\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\IdeaProjects\crmdemo_front\src\interfaces\pagination" />
+      <recent name="C:\Users\user\IdeaProjects\crmdemo_front\src\components" />
+      <recent name="C:\Users\user\IdeaProjects\crmdemo_front\src\components\cpanel\order stats" />
+      <recent name="C:\Users\user\IdeaProjects\crmdemo_front\src\components\cpanel\manager list" />
+      <recent name="C:\Users\user\IdeaProjects\crmdemo_front\src\components\cpanel" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9623bd03-ab01-4f63-b96a-db21e5d31167" name="Changes" comment="" />
+      <created>1741185511695</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741185511695</updated>
+      <workItem from="1741185512792" duration="20746000" />
+      <workItem from="1741264717638" duration="7422000" />
+      <workItem from="1741730461072" duration="9310000" />
+      <workItem from="1741782373148" duration="10046000" />
+      <workItem from="1741887262619" duration="6226000" />
+      <workItem from="1741894956854" duration="2138000" />
+      <workItem from="1742216591426" duration="17255000" />
+      <workItem from="1742294688747" duration="6033000" />
+      <workItem from="1742387709647" duration="5845000" />
+      <workItem from="1743681359600" duration="5212000" />
+      <workItem from="1743763176623" duration="9798000" />
+      <workItem from="1744811009039" duration="12030000" />
+      <workItem from="1744877649401" duration="7862000" />
+      <workItem from="1746629420194" duration="1558000" />
+      <workItem from="1747223621661" duration="6915000" />
+      <workItem from="1747388429143" duration="18833000" />
+      <workItem from="1747661175734" duration="6018000" />
+      <workItem from="1747673962067" duration="3337000" />
+      <workItem from="1747682127139" duration="5000" />
+      <workItem from="1747745319538" duration="9346000" />
+      <workItem from="1747833104558" duration="10640000" />
+      <workItem from="1747907218665" duration="19647000" />
+      <workItem from="1747997650904" duration="2000" />
+      <workItem from="1748001762467" duration="1725000" />
+      <workItem from="1748004215507" duration="3748000" />
+    </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1741214432382</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741214432383</updated>
+    </task>
+    <task id="LOCAL-00002" summary="key changes: removed redux (for now), fixed sorting and pagination, removed some of unused files">
+      <option name="closed" value="true" />
+      <created>1741786754093</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741786754093</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added comments, toggling comments, renamed services, reformated dirs">
+      <option name="closed" value="true" />
+      <created>1741896863142</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741896863142</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added modal window component with order updating, group names dropdown and api calls to edit order and create new group name">
+      <option name="closed" value="true" />
+      <created>1742394003965</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742394003965</updated>
+    </task>
+    <task id="LOCAL-00005" summary="small fix">
+      <option name="closed" value="true" />
+      <created>1743684599982</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743684599982</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added filtering p1, needs ui refinement">
+      <option name="closed" value="true" />
+      <created>1744837201565</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744837201565</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refined ui, added assigned to me checkbox">
+      <option name="closed" value="true" />
+      <created>1744889125453</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744889125453</updated>
+    </task>
+    <task id="LOCAL-00008" summary="spelling fix">
+      <option name="closed" value="true" />
+      <created>1746630345574</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746630345574</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added excel downloads">
+      <option name="closed" value="true" />
+      <created>1747397020275</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747397020275</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added header">
+      <option name="closed" value="true" />
+      <created>1747422837605</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1747422837605</updated>
+    </task>
+    <task id="LOCAL-00011" summary="small feature">
+      <option name="closed" value="true" />
+      <created>1747427306934</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1747427306934</updated>
+    </task>
+    <task id="LOCAL-00012" summary="updated put to patch">
+      <option name="closed" value="true" />
+      <created>1747433306600</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1747433306600</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added cpanel, add manager modal">
+      <option name="closed" value="true" />
+      <created>1747676559572</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747676559572</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added manager list">
+      <option name="closed" value="true" />
+      <created>1747762187426</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747762187426</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added manager individual stats, ban\unban option">
+      <option name="closed" value="true" />
+      <created>1747851905264</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1747851905264</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added pass setting">
+      <option name="closed" value="true" />
+      <created>1748002686927</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1748002686927</updated>
+    </task>
+    <task id="LOCAL-00017" summary="password form style">
+      <option name="closed" value="true" />
+      <created>1748003491036</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1748003491036</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <MESSAGE value="key changes: removed redux (for now), fixed sorting and pagination, removed some of unused files" />
+    <MESSAGE value="added comments, toggling comments, renamed services, reformated dirs" />
+    <MESSAGE value="added modal window component with order updating, group names dropdown and api calls to edit order and create new group name" />
+    <MESSAGE value="small fix" />
+    <MESSAGE value="added filtering p1, needs ui refinement" />
+    <MESSAGE value="refined ui, added assigned to me checkbox" />
+    <MESSAGE value="spelling fix" />
+    <MESSAGE value="added excel downloads" />
+    <MESSAGE value="added header" />
+    <MESSAGE value="small feature" />
+    <MESSAGE value="updated put to patch" />
+    <MESSAGE value="added cpanel, add manager modal" />
+    <MESSAGE value="added manager list" />
+    <MESSAGE value="added manager individual stats, ban\unban option" />
+    <MESSAGE value="added pass setting" />
+    <MESSAGE value="password form style" />
+    <option name="LAST_COMMIT_MESSAGE" value="password form style" />
+  </component>
+</project>

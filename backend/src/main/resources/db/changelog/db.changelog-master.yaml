@@ -1,0 +1,180 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.1
+      author: dina
+      changes:
+        - createTable:
+            tableName: managers
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: surname
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: isActive
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastLogIn
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 1.0.2
+      author: dina
+      changes:
+        - insert:
+            tableName: managers
+            columns:
+              - column:
+                  name: email
+                  value: ${ADMIN_EMAIL}
+              - column:
+                  name: password
+                  value: ${ADMIN_PASSWORD}
+              - column:
+                  name: role
+                  value: "ROLE_ADMIN"
+              - column:
+                  name: name
+                  value: "admin"
+              - column:
+                  name: surname
+                  value: "adminovich"
+              - column:
+                  name: isActive
+                  value: 1
+              - column:
+                  name: lastLogIn
+                  value: null
+  - changeSet:
+      id: 1.0.3
+      author: dina
+      changes:
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: manager
+                  type: VARCHAR(255)
+              - column:
+                  name: group
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1.0.4
+      author: dina
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_comments_orders
+                    references: orders(id)
+                    onDelete: CASCADE
+              - column:
+                  name: body
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1.0.5
+      author: dina
+      changes:
+        - createTable:
+            tableName: groups
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+        - dropColumn:
+            tableName: orders
+            columnName: group
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_orders_groups
+                    references: groups(id)
+                    onDelete: SET NULL
+  - changeSet:
+      id: 1.0.6
+      author: dina
+      changes:
+        - addColumn:
+            tableName: managers
+            columns:
+              - column:
+                  name: isBanned
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
