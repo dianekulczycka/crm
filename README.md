@@ -1,6 +1,6 @@
-# CRM application
+# CRM Application
 
-## Structure:
+## Project Structure
 crm/
 ├── backend/
 │ ├── .env
@@ -24,26 +24,24 @@ crm/
 │ │ │ └── resources/
 │ │ └── test/
 │ └── target/
-├── frontend/
-│ ├── node_modules/
-│ ├── public/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── interfaces/
-│ │ ├── layouts/
-│ │ ├── pages/
-│ │ ├── router/
-│ │ ├── services/
-│ │ ├── index.css
-│ │ ├── index.tsx
-│ │ └── react-app-env.d.ts
-│ ├── .gitignore
-│ ├── package.json
-│ ├── package-lock.json
-│ ├── README.md
-│ └── tsconfig.json
+└── frontend/
+├── node_modules/
+├── public/
+├── src/
+│ ├── components/
+│ ├── interfaces/
+│ ├── layouts/
+│ ├── pages/
+│ ├── router/
+│ ├── services/
+│ ├── index.css
+│ ├── index.tsx
+│ └── react-app-env.d.ts
+├── .gitignore
+├── package.json
+├── package-lock.json
 ├── README.md
-└── CRM.postman_collection.json
+└── tsconfig.json
 
 ## Used stack:
 
@@ -53,7 +51,7 @@ crm/
 - MySQL, Liquibase
 - Springdoc OpenAPI
 - JWT
-- 
+ 
 ### Front:
 - React + Typescript, React router, React hook form, React paginate
 - Axios for API calls
@@ -73,27 +71,27 @@ Before running, please terminate operations on:
 
 You may use `kill-port` for this:
 
-**npm install kill-port**
-**kill-port 3000 8080**
+`npm install kill-port`/n
+`kill-port 3000 8080`/n
 
 ### Back:
-- required: Java 17 (verify with **java -version**), Maven (verify with **mvn -v**), MySQL
+- required: Java 17 (verify with `java -version`), Maven (verify with `mvn -v`), MySQL
 - from project root, use commands: 
 
-**cd backend**
-**./mvnw clean install**
-**./mvnw spring-boot:runv**
+`cd backend`/n
+`./mvnw clean install`/n
+`./mvnw spring-boot:runv`/n
 
 - via intellij: shift + F10
 
 It will run app on localhost port 8080 `localhost:8080`
 
 ### Front:
-- required: Node js v16+, npm (verify with **nodejs -v**)
+- required: Node js v16+, npm (verify with `nodejs -v`)
 - from project root, use commands: 
 
-**cd frontend**
-**npm install**
-**npm start**
+`cd frontend`/n
+`npm install`/n
+`npm start`/n
 
 It will run front end on localhost port 3000 `localhost:3000`
