@@ -7,9 +7,10 @@ interface IProps {
     orders: IOrder[];
     groups: string[];
     onSort: (column: string) => void;
+    refreshOrders: () => void
 }
 
-const OrdersComponent: FC<IProps> = ({orders, groups, onSort}) => {
+const OrdersComponent: FC<IProps> = ({orders, groups, onSort, refreshOrders}) => {
     const [expandedOrderId, setExpandedOrderId] = useState<number | null>(null);
 
     const toggleExpand = (orderId: number) => {
@@ -28,6 +29,7 @@ const OrdersComponent: FC<IProps> = ({orders, groups, onSort}) => {
                         groups={groups}
                         isExpanded={expandedOrderId === order.id}
                         onClick={() => toggleExpand(order.id)}
+                        refreshOrders={refreshOrders}
                     />
                 ))}
                 </tbody>

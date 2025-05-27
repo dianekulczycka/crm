@@ -1,7 +1,7 @@
-import {FC, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {IOrder} from "../../interfaces/order/IOrder";
 import {IComment} from "../../interfaces/comment/IComment";
-import {getAllComments} from "../../services/commentsService";
+import {getAllComments} from "../../api/commentsService";
 import CommentFormComponent from "./CommentFormComponent";
 import CommentComponent from "./CommentComponent";
 import PreloaderComponent from "../PreloaderComponent";
@@ -11,12 +11,14 @@ import {Button} from "react-bootstrap";
 interface IProps {
     order: IOrder;
     groups: string[];
+    refreshOrders: () => void
 }
 
-const CommentsComponent: FC<IProps> = ({order, groups}) => {
+const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
     const [comments, setComments] = useState<IComment[]>([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setIsLoaded(false);
@@ -25,11 +27,15 @@ const CommentsComponent: FC<IProps> = ({order, groups}) => {
                 setComments(comments);
                 setIsLoaded(true);
             })
-            .catch(() => setIsLoaded(true));
+            .catch((error) => {
+                setError(error.message);
+                setIsLoaded(true);
+            });
     }, [order.id]);
 
     const onCommentAdded = (newComment: IComment) => {
         setComments([...comments, newComment]);
+        refreshOrders();
     };
 
     const onModalOpen = () => {
@@ -43,6 +49,7 @@ const CommentsComponent: FC<IProps> = ({order, groups}) => {
 
     return (
         <>
+            {error && <p className="text-danger">{error}</p>}
             {isLoaded ? (
                 <tr>
                     <td colSpan={5}>
@@ -68,6 +75,7 @@ const CommentsComponent: FC<IProps> = ({order, groups}) => {
             {isModalOpen && (
                 <div>
                     <OrderChangeModalComponent
+                        refreshOrders={refreshOrders}
                         groups={groups}
                         order={order}
                         onClose={onModalClose}

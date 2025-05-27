@@ -5,9 +5,11 @@ import OrderStatsItemComponent from "../order stats/OrderStatsItemComponent";
 
 interface IProps {
     manager: IManager;
+    refreshManagers: () => void;
 }
 
-const ManagersListItemComponent: FC<IProps> = ({manager}) => {
+const ManagersListItemComponent: FC<IProps> = ({manager, refreshManagers}) => {
+    const total = manager.stats?.reduce((sum, stat) => sum + stat.count, 0) ?? 0;
     return (
         <div className="px-4 bg-success-subtle text-right justify-content-between m-4 p-2 d-flex">
             <div className="d-flex flex-column">
@@ -17,7 +19,7 @@ const ManagersListItemComponent: FC<IProps> = ({manager}) => {
                 <p className="m-1 fs-4">surname:{manager.surname}</p>
                 <p className="m-1 fs-4">active:{manager.isActive ? "yes" : "no"}</p>
                 <p className="m-1 fs-4">last login:{manager.lastLogin?.replace("T", " ") ?? "never"}</p>
-                <p className="m-1 fs-4">total:{manager.stats?.length}</p>
+                <p className="m-1 fs-4">total:{total}</p>
             </div>
             <div>
                 {manager.stats && manager.stats.length > 0 ? (
@@ -28,7 +30,7 @@ const ManagersListItemComponent: FC<IProps> = ({manager}) => {
                     </ul>
                 ) : <p className="m-1 fs-4"> no stats yet </p>}
             </div>
-            <ActivateBanButtonsComponent manager={manager}/>
+            <ActivateBanButtonsComponent manager={manager} refreshManagers={refreshManagers}/>
         </div>
     );
 };

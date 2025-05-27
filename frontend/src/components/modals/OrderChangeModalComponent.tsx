@@ -1,26 +1,25 @@
 import React, {FC, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
-import {editOrder} from "../../services/ordersService";
+import {editOrder} from "../../api/ordersService";
 import {IOrder} from "../../interfaces/order/IOrder";
 import {Button, Modal} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 
 interface IProps {
     onClose: () => void;
     order: IOrder;
     isOpen: boolean;
     groups: string[];
+    refreshOrders: () => void;
 }
 
-const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups}) => {
+const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups, refreshOrders}) => {
     const [newGroupName, setNewGroupName] = useState<string>('');
     const [selectedGroup, setSelectedGroup] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [updatedFields, setUpdatedFields] = useState<Partial<IOrder>>({});
     const {control, handleSubmit} = useForm({defaultValues: order});
-    const navigate = useNavigate();
 
-    const onSubmit = async () => {
+    const onSubmit = () => {
         if (newGroupName.trim() || selectedGroup) {
             const groupName = newGroupName.trim()
                 ? newGroupName.trim().toUpperCase()
@@ -39,17 +38,20 @@ const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups})
             updatedFields.groupName = groupName;
         }
 
-
-        await editOrder(order.id, {
+        editOrder(order.id, {
             ...updatedFields,
             groupName: newGroupName,
             sum: updatedFields.sum ?? 0,
             alreadyPaid: updatedFields.alreadyPaid ?? 0,
-            age: updatedFields.age ?? 0
-        });
-
-        onClose();
-        navigate(0);
+            age: updatedFields.age ?? 0,
+        })
+            .then(() => {
+            onClose();
+            refreshOrders();
+            })
+            .catch((error) => {
+                setError(error);
+            });
     };
 
     return (

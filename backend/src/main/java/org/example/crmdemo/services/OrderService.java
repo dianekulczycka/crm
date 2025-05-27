@@ -2,6 +2,7 @@ package org.example.crmdemo.services;
 
 import com.alibaba.excel.EasyExcel;
 import lombok.RequiredArgsConstructor;
+import org.example.crmdemo.dto.order.ExportRequestDto;
 import org.example.crmdemo.dto.order.OrderDto;
 import org.example.crmdemo.dto.order.StatDto;
 import org.example.crmdemo.dto.pagination.FilterDto;
@@ -25,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -122,37 +124,50 @@ public class OrderService {
             throw new RuntimeException("You can only update your orders");
         }
 
-        orderMapper.updateEntity(order, orderDto);
+        order.setManager(managerSurname);
+
+        if (order.getStatus() == null) {
+            order.setStatus("In Work");
+        }
 
         if (orderDto.getGroupName() != null) {
             Group group = groupService.getOrCreateGroup(orderDto.getGroupName().toUpperCase());
             order.setGroup(group);
         }
 
+        orderMapper.updateEntity(order, orderDto);
         orderRepository.save(order);
     }
 
 
-    public byte[] exportToExcel(FilterDto filterDto, String token) {
+    public byte[] exportToExcel(ExportRequestDto exportRequestDto, String token) {
         String managerSurname = null;
 
-        if (Boolean.TRUE.equals(filterDto.getIsAssignedToMe())) {
+        if (Boolean.TRUE.equals(exportRequestDto.getIsAssignedToMe())) {
             managerSurname = getManagerFromToken(token).getSurname();
         }
 
+        Sort sort = Sort.by(
+                Sort.Direction.fromString(
+                        Optional.ofNullable(exportRequestDto.getDirection()).orElse("desc").toUpperCase()
+                ),
+                Optional.ofNullable(exportRequestDto.getOrder()).orElse("id")
+        );
+
         List<Order> orders = orderRepository.findOrdersFiltered(
-                filterDto.getName(),
-                filterDto.getSurname(),
-                filterDto.getEmail(),
-                filterDto.getPhone(),
-                filterDto.getStatus(),
-                filterDto.getCourse(),
-                filterDto.getCourseFormat(),
-                filterDto.getCourseType(),
-                filterDto.getGroupName(),
-                filterDto.getStartDate() != null ? filterDto.getStartDate().atStartOfDay() : null,
-                filterDto.getEndDate() != null ? filterDto.getEndDate().atStartOfDay() : null,
-                managerSurname
+                exportRequestDto.getName(),
+                exportRequestDto.getSurname(),
+                exportRequestDto.getEmail(),
+                exportRequestDto.getPhone(),
+                exportRequestDto.getStatus(),
+                exportRequestDto.getCourse(),
+                exportRequestDto.getCourseFormat(),
+                exportRequestDto.getCourseType(),
+                exportRequestDto.getGroupName(),
+                exportRequestDto.getStartDate() != null ? exportRequestDto.getStartDate().atStartOfDay() : null,
+                exportRequestDto.getEndDate() != null ? exportRequestDto.getEndDate().atStartOfDay() : null,
+                managerSurname,
+                sort
         );
 
         List<OrderDto> orderDtos = orders.stream()

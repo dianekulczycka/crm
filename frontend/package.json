@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.105",
@@ -19,7 +20,8 @@
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "use-debounce": "^10.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,6 +49,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
-    "@types/lodash": "^4.17.16"
+    "@types/lodash": "^4.17.16",
+    "@types/react-toastify": "^4.0.2"
   }
 }

@@ -14,7 +14,7 @@ const routes: RouteObject[] = [
         errorElement: <ErrorLayout/>,
         children: [
             {index: true, element: <AuthPage/>},
-            {path: "login", element: <AuthPage/>}
+            {path: "login", element: <AuthPage/>},
         ],
     },
     {
@@ -24,9 +24,9 @@ const routes: RouteObject[] = [
         children: [
             {path: "orders", element: <OrdersPage/>},
             {path: "cpanel", element: <CPanelPage/>},
-            {path: "activate/:token", element: <PasswordPage />}
+            {path: "activate/:token", element: <PasswordPage/>},
         ],
-    }
+    },
 ];
 
 export const router = createBrowserRouter(routes);

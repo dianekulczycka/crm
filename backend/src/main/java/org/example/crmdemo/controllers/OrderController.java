@@ -2,6 +2,7 @@ package org.example.crmdemo.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.crmdemo.dto.order.ExportRequestDto;
 import org.example.crmdemo.dto.order.OrderDto;
 import org.example.crmdemo.dto.order.OrderRequestDto;
 import org.example.crmdemo.dto.order.StatDto;
@@ -57,9 +58,9 @@ public class OrderController {
 
     @PostMapping("/excel")
     public ResponseEntity<byte[]> exportOrdersToExcel(
-            @Valid @RequestBody FilterDto filterDto,
+            @Valid @RequestBody ExportRequestDto dto,
             @RequestHeader("Authorization") String token) {
-        byte[] excelFile = orderService.exportToExcel(filterDto, token.replace("Bearer ", ""));
+        byte[] excelFile = orderService.exportToExcel(dto, token.replace("Bearer ", ""));
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=orders.xlsx")
                 .body(excelFile);

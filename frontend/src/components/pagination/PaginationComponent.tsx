@@ -1,25 +1,21 @@
 import {FC} from "react";
 import ReactPaginate from "react-paginate";
+import {useSearchParams} from "react-router-dom";
 
 interface IProps {
     total: number;
     perPage: number;
     page: number;
-    setPage?: (page: number) => void;
-    setSearchParams?: (params: any) => void;
+    setSearchParams: (params: any) => void;
 }
 
-const PaginationComponent: FC<IProps> = ({total, perPage, page, setSearchParams, setPage}) => {
+const PaginationComponent: FC<IProps> = ({total, perPage, page}) => {
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const onPageChange = (selectedPage: { selected: number }) => {
         const newPage = selectedPage.selected + 1;
-        if (setSearchParams) {
-            const currentParams = new URLSearchParams(window.location.search);
-            currentParams.set("page", String(newPage));
-            setSearchParams(Object.fromEntries(currentParams.entries()));
-        } else if (setPage) {
-            setPage(newPage);
-        }
+        searchParams.set("page", String(newPage));
+        setSearchParams(searchParams);
     };
 
     return (
@@ -30,6 +26,7 @@ const PaginationComponent: FC<IProps> = ({total, perPage, page, setSearchParams,
                 marginPagesDisplayed={1}
                 onPageChange={onPageChange}
                 forcePage={page - 1}
+                activeClassName="active"
                 containerClassName="pagination justify-content-center"
                 pageClassName="page-item m-1"
                 pageLinkClassName="page-link btn rounded-circle btn-outline-secondary text-secondary"

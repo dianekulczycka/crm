@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {IErrorResponse} from "../interfaces/error/IErrorResponse";
-import {getAccessToken} from "./tokenService";
-import {refreshAccessToken} from "./authService";
+import {IErrorResponse} from "../../interfaces/error/IErrorResponse";
+import {getAccessToken} from "./tokenUtil";
+import {refreshAccessToken} from "../authService";
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: "",
@@ -39,19 +39,9 @@ axiosInstance.interceptors.response.use(
     (res: AxiosResponse) => res,
     (err: AxiosError<IErrorResponse>) => {
         const msg = err.response?.data?.msg || "error, something went wrong";
-        alert(msg);
+        console.warn(msg);
         return Promise.reject(err);
     }
 );
-
-export const resolveCatch = (error: unknown): void => {
-    if (axios.isAxiosError(error)) {
-        const msg = error.response?.data?.msg || "Something went wrong";
-        const code = error.response?.data?.code || "UNKNOWN_ERROR";
-        console.warn(`${code}: ${msg}`);
-    } else {
-        console.warn("Unexpected error", error);
-    }
-};
 
 export default axiosInstance;

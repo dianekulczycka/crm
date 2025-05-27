@@ -1,7 +1,7 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import {login} from "../../services/authService";
+import {login} from "../../api/authService";
 import {Button} from "react-bootstrap";
 
 interface IFormData {
@@ -10,32 +10,28 @@ interface IFormData {
 }
 
 const AuthFormComponent: FC = () => {
+    const [error, setError] = useState<string | null>(null);
     const {
         register,
         handleSubmit,
         formState: {errors}
-    } = useForm<IFormData>({
-        defaultValues: {
-            email: "admin@gmail.com",
-            password: "admin",
-        }
-    });
+    } = useForm<IFormData>();
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<IFormData> = async (data) => {
-        try {
-            const {email, password} = data;
-            const authData = {email, password};
-            await login(authData);
-            navigate("/orders?page=1&order=id&direction=desc");
-        } catch (error) {
-            alert("Login failed. Please try again.");
-        }
+    const onSubmit: SubmitHandler<IFormData> = (data) => {
+        login(data)
+            .then(() => {
+                navigate("/orders?page=1&order=id&direction=desc");
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
     };
 
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
+            {error && <p className="text-danger">{error}</p>}
             <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
                 <input
                     {...register("email", {

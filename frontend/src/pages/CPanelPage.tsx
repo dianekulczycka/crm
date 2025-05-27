@@ -1,48 +1,74 @@
-import {FC, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {IStat} from "../interfaces/order/IStat";
-import {getStats} from "../services/ordersService";
+import {getStats} from "../api/ordersService";
 import PreloaderComponent from "../components/PreloaderComponent";
 import CPanelComponent from "../components/cpanel/CPanelComponent";
 import {IManager} from "../interfaces/manager/IManager";
-import {getManagers} from "../services/managerService";
+import {getManagers} from "../api/managerService";
 import PaginationComponent from "../components/pagination/PaginationComponent";
+import {useSearchParams} from "react-router-dom";
 
 const CPanelPage: FC = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [stats, setStats] = useState<IStat[]>([]);
     const [managers, setManagers] = useState<IManager[]>([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [page, setPage] = useState<number>(1);
     const [total, setTotal] = useState<number>(0);
+    const [error, setError] = useState<string | null>(null);
     const [perPage, setPerPage] = useState<number>(0);
+    const page = Number(searchParams.get("page")) || 1;
 
-    useEffect((): void => {
-        setIsLoaded(false);
-        getStats()
-            .then((data) => {
-                setStats(data);
-                setIsLoaded(true);
-            })
+    useEffect(() => {
+        if (!searchParams.has("page")) {
+            setSearchParams({...Object.fromEntries(searchParams.entries()), page: "1"});
+        }
     }, []);
 
     useEffect((): void => {
         setIsLoaded(false);
-        getManagers({page})
-            .then((data) => {
-                setManagers(data.data);
-                setTotal(data.total);
-                setPerPage(data.perPage);
+        getStats()
+            .then((stats) => {
+                setStats(stats);
                 setIsLoaded(true);
             })
+            .catch((error) => {
+                setError(error);
+                setIsLoaded(true);
+            });
+    }, []);
+
+    const loadManagers = () => {
+        setIsLoaded(false);
+        getManagers({page})
+            .then((resp) => {
+                setManagers(resp.data);
+                setTotal(resp.total);
+                setPerPage(resp.perPage);
+                setIsLoaded(true)
+            })
+            .catch((error) => {
+                setError(error.message);
+                setIsLoaded(true)
+            })
+    };
+
+    useEffect(() => {
+        loadManagers();
     }, [page]);
+
+    const refreshManagers = () => {
+        loadManagers();
+    };
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-evenly p-4 w-100">
+            {error && <p className="text-danger">{error}</p>}
             {isLoaded ?
                 <>
-                    <CPanelComponent managers={managers} stats={stats}/>
+                    <CPanelComponent refreshManagers={refreshManagers} managers={managers} stats={stats}/>
                     <PaginationComponent total={total}
                                          perPage={perPage} page={page}
-                                         setPage={(newPage: number) => setPage(newPage)} />
+                                         setSearchParams={setSearchParams}/>
                 </>
                 :
                 <PreloaderComponent/>

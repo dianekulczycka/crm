@@ -12,5 +12,4 @@ import java.util.Optional;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
     Optional<Manager> findByEmail(String email);
-    Page<Manager> findByRoleNot(Role role, Pageable pageable);
 }

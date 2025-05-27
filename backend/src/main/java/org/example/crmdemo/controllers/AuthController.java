@@ -2,9 +2,9 @@ package org.example.crmdemo.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.crmdemo.dto.auth.GenerationRequestDto;
 import org.example.crmdemo.dto.auth.AuthRequestDto;
 import org.example.crmdemo.dto.auth.AuthResponseDto;
+import org.example.crmdemo.dto.auth.GenerationRequestDto;
 import org.example.crmdemo.dto.auth.RefreshTokenRequestDto;
 import org.example.crmdemo.services.AuthService;
 import org.springframework.http.HttpStatus;

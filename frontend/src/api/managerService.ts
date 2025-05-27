@@ -1,45 +1,35 @@
-import axios, {AxiosResponse} from "axios";
-import {BASE_URL} from "./consts";
+import {AxiosResponse} from "axios";
+import {BASE_URL} from "./utils/consts";
 import {ICreateManagerRequest} from "../interfaces/manager/ICreateManagerRequest";
 import {IManager} from "../interfaces/manager/IManager";
-import {getAccessToken} from "./tokenService";
 import {IPaginationResponse} from "../interfaces/pagination/IPaginationResponse";
 import {ISearchParams} from "../interfaces/order/ISearchParams";
+import axiosInstance from "./utils/interceptors";
 
 export const getManagers = async (params: ISearchParams): Promise<IPaginationResponse<IManager>> => {
     try {
-        const response: AxiosResponse<IPaginationResponse<IManager>> = await axios.get(`${BASE_URL}/managers`, {
-            params,
-            headers: {Authorization: `Bearer ${getAccessToken()}`}
-        });
+        const response: AxiosResponse<IPaginationResponse<IManager>> = await axiosInstance.get(`${BASE_URL}/managers`, {params});
         return response.data;
-    } catch (error) {
-        console.error("Error fetching managers", error);
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "failed to fetch managers");
     }
 };
 
 export const addManager = async (data: ICreateManagerRequest): Promise<void> => {
     try {
-        const response: AxiosResponse<void> = await axios.post(
-            `${BASE_URL}/managers/create`,
-            data,
-            {headers: {Authorization: `Bearer ${getAccessToken()}`}}
-        );
+        const response: AxiosResponse<void> = await axiosInstance.post(
+            `${BASE_URL}/managers/create`, data);
         return response.data;
-    } catch (error) {
-        console.error("Error creating manager", error);
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "failed to add manager");
     }
 };
 
 export const toggleBanStatus = async (id: number): Promise<void> => {
     try {
-        const response: AxiosResponse<void> = await axios.put(`${BASE_URL}/managers/ban/${id}`);
+        const response: AxiosResponse<void> = await axiosInstance.put(`${BASE_URL}/managers/ban/${id}`);
         return response.data;
-    } catch (error) {
-        console.error("Error banning manager", error);
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "failed to toggle manager ban");
     }
 };
-

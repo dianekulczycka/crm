@@ -1,20 +1,14 @@
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {IAuthResponse} from "../interfaces/auth/IAuthResponse";
 import {IAuthRequest} from "../interfaces/auth/IAuthRequest";
-import {
-    getAccessToken,
-    getRefreshToken,
-    setAccessToken,
-    setRefreshToken,
-    setUserName,
-    setUserRole
-} from "./tokenService";
-import {BASE_URL} from "./consts";
+import {getRefreshToken, setAccessToken, setRefreshToken, setUserName, setUserRole} from "./utils/tokenUtil";
+import {BASE_URL} from "./utils/consts";
 import {IPasswordUpdate} from "../interfaces/auth/IPasswordUpdate";
+import axiosInstance from "./utils/interceptors";
 
 export const login = async (authData: IAuthRequest): Promise<void> => {
     try {
-        const response: AxiosResponse<IAuthResponse> = await axios.post(
+        const response: AxiosResponse<IAuthResponse> = await axiosInstance.post(
             `${BASE_URL}/auth/login`,
             authData,
             {headers: {"Content-Type": "application/json"}}
@@ -23,58 +17,48 @@ export const login = async (authData: IAuthRequest): Promise<void> => {
         setRefreshToken(response.data.refreshToken);
         setUserName(response.data.name);
         setUserRole(response.data.role);
-    } catch (error) {
-        console.error("Error auth", error);
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "log in failed");
     }
-}
+};
 
-export const refreshAccessToken = async (): Promise<string | null> => {
+export const refreshAccessToken = async (): Promise<string> => {
     const refreshToken = getRefreshToken();
-
-    if (!refreshToken) {
-        console.error("No refresh token");
-        return null;
-    }
+    if (!refreshToken) throw new Error("No refresh token");
 
     try {
-        const response: AxiosResponse<IAuthResponse> = await axios.post(
+        const response: AxiosResponse<IAuthResponse> = await axiosInstance.post(
             `${BASE_URL}/auth/refresh-token`,
             {refreshToken},
             {headers: {"Content-Type": "application/json"}}
         );
-
         setAccessToken(response.data.accessToken);
         setRefreshToken(response.data.refreshToken);
         return response.data.accessToken;
-    } catch (error) {
-        console.error("Error refreshing token:", error);
-        return null;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "token refresh failed");
     }
-}
+};
 
 export const requestPasswordToken = async (managerId: number): Promise<string> => {
     try {
-        const response: AxiosResponse<string> = await axios.post(
-            `${BASE_URL}/auth/setPassword/id/${managerId}`,
-            {headers: {Authorization: `Bearer ${getAccessToken()}`}}
+        const response: AxiosResponse<string> = await axiosInstance.post(
+            `${BASE_URL}/auth/setPassword/id/${managerId}`
         );
         return response.data;
-    } catch (error) {
-        console.error("Error activating manager", error)
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "failed to request token");
     }
-}
+};
 
 export const setManagerPassword = async (token: string, request: IPasswordUpdate): Promise<void> => {
     try {
-        await axios.post(
+        await axiosInstance.post(
             `${BASE_URL}/auth/setPassword/${token}`,
             request,
             {headers: {"Content-Type": "application/json"}}
         );
-    } catch (error) {
-        console.error("Error activating manager", error)
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.msg || "failed to set password");
     }
-}
+};

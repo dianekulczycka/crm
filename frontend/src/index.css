@@ -5,3 +5,10 @@ font-size: 12px;
 th:hover, td:hover {
     cursor: pointer;
 }
+
+.pagination .active .page-link {
+    background-color: white;
+    color: #198754;
+    border: 2px solid #198754;
+    font-weight: 600;
+}

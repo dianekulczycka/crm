@@ -7,9 +7,10 @@ interface IProps {
     isExpanded: boolean;
     onClick: () => void;
     groups: string[];
+    refreshOrders: () => void
 }
 
-const OrderComponent: FC<IProps> = ({order, groups, isExpanded, onClick}) => {
+const OrderComponent: FC<IProps> = ({order, groups, isExpanded, onClick, refreshOrders}) => {
     return (
         <>
             <tr onClick={onClick} className="table-light">
@@ -30,6 +31,7 @@ const OrderComponent: FC<IProps> = ({order, groups, isExpanded, onClick}) => {
                 <td>{order.groupName || "null"}</td>
             </tr>
             {isExpanded && <CommentsComponent
+                refreshOrders={refreshOrders}
                 order={order}
                 groups={groups}
             />}

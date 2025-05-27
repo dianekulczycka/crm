@@ -1,23 +1,23 @@
-import {FC, useState} from "react";
+import React, {FC, useState} from "react";
 import {IStat} from "../../interfaces/order/IStat";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {CreateManagerModalComponent} from "../modals/CreateManagerModalComponent";
 import {ICreateManagerRequest} from "../../interfaces/manager/ICreateManagerRequest";
-import {addManager} from "../../services/managerService";
+import {addManager} from "../../api/managerService";
 import OrdersStatsComponent from "./order stats/OrdersStatsComponent";
 import {IManager} from "../../interfaces/manager/IManager";
 import ManagersListComponent from "./manager list/ManagersListComponent";
 import {Button} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 
 interface IProps {
     stats: IStat[];
     managers: IManager[];
+    refreshManagers: () => void;
 }
 
-const CPanelComponent: FC<IProps> = ({stats, managers}) => {
-    const navigate = useNavigate();
+const CPanelComponent: FC<IProps> = ({stats, managers, refreshManagers}) => {
     const [isModalOpen, setModalOpen] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const {
         control,
@@ -30,22 +30,25 @@ const CPanelComponent: FC<IProps> = ({stats, managers}) => {
             .then(() => {
                 setModalOpen(false);
                 reset();
-                navigate(0);
+                refreshManagers();
             })
+            .catch((error) => {
+                setError(error.message);
+            });
     };
 
     const onClose = () => {
         setModalOpen(false);
-        reset();
     };
 
     return (
         <div className="d-flex flex-column align-items-start w-100">
+            {error && <p className="text-danger">{error}</p>}
             <OrdersStatsComponent stats={stats}/>
             <Button className="btn btn-success mx-5 fs-4" onClick={() => setModalOpen(true)}>
                 Create manager
             </Button>
-            <ManagersListComponent managers={managers}/>
+            <ManagersListComponent refreshManagers={refreshManagers} managers={managers}/>
             <CreateManagerModalComponent
                 isOpen={isModalOpen}
                 onClose={onClose}

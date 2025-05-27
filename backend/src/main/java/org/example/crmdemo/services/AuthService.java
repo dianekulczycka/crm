@@ -2,9 +2,9 @@ package org.example.crmdemo.services;
 
 import lombok.RequiredArgsConstructor;
 import org.example.crmdemo.configs.PasswordEncoderConfiguration;
-import org.example.crmdemo.dto.auth.GenerationRequestDto;
 import org.example.crmdemo.dto.auth.AuthRequestDto;
 import org.example.crmdemo.dto.auth.AuthResponseDto;
+import org.example.crmdemo.dto.auth.GenerationRequestDto;
 import org.example.crmdemo.entities.Manager;
 import org.example.crmdemo.enums.Role;
 import org.example.crmdemo.repositories.ManagerRepository;

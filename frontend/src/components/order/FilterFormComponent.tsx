@@ -1,29 +1,37 @@
-import React, {FC} from "react";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {ISearchParams} from "../../interfaces/order/ISearchParams";
+import React, {FC, useEffect} from "react";
+import {useForm} from "react-hook-form";
 import dayjs from "dayjs";
 import {Button} from "react-bootstrap";
+import {useDebounce} from "use-debounce";
+import {IFilter} from "../../interfaces/order/IFilter";
 
 interface IProps {
     groups: string[];
-    onFilterChange: (filters: Partial<ISearchParams>) => void;
+    onFilterChange: (filters: Partial<IFilter>) => void;
     onExport: () => void;
+    defaultValues: Partial<IFilter>;
 }
 
-export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExport}) => {
-    const {register, handleSubmit} = useForm<Partial<ISearchParams>>();
+export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExport, defaultValues}) => {
+    const {register, watch} = useForm<Partial<IFilter>>({defaultValues});
+    const watchedValues = watch();
+    const [debouncedFilters] = useDebounce(watchedValues, 1000);
 
-    const onSearch: SubmitHandler<Partial<ISearchParams>> = (data) => {
+    useEffect(() => {
         const formattedData = {
-            ...data,
-            startDate: data.startDate ? dayjs(data.startDate).format('YYYY-MM-DD') : undefined,
-            endDate: data.endDate ? dayjs(data.endDate).format('YYYY-MM-DD') : undefined,
+            ...debouncedFilters,
+            startDate: debouncedFilters.startDate
+                ? dayjs(debouncedFilters.startDate).format("YYYY-MM-DD")
+                : undefined,
+            endDate: debouncedFilters.endDate
+                ? dayjs(debouncedFilters.endDate).format("YYYY-MM-DD")
+                : undefined,
         };
         onFilterChange(formattedData);
-    };
+    }, [debouncedFilters]);
 
     return (
-        <form onSubmit={handleSubmit(onSearch)}>
+        <form>
             <div className="d-flex flex-column">
                 <div className="d-flex flex-row">
                     <input {...register("name")} placeholder="Name" className="form-control m-2"/>
@@ -86,7 +94,6 @@ export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExpor
 
                     <input {...register("startDate")} type="date" className="form-control m-2"/>
                     <input {...register("endDate")} type="date" className="form-control m-2"/>
-                    <Button type="submit" className="btn btn-success m-2">Search</Button>
                     <Button type="button" onClick={onExport} className="btn btn-success m-2">Excel</Button>
                 </div>
             </div>

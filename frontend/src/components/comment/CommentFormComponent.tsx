@@ -1,6 +1,6 @@
-import {FC} from "react";
+import React, {FC, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {addComment} from "../../services/commentsService";
+import {addComment} from "../../api/commentsService";
 import {IComment} from "../../interfaces/comment/IComment";
 import {Button} from "react-bootstrap";
 
@@ -9,23 +9,28 @@ interface IProps {
     onCommentAdded: (comment: IComment) => void;
 }
 
-interface CommentForm {
+interface ICommentForm {
     body: string;
 }
 
 const CommentFormComponent: FC<IProps> = ({orderId, onCommentAdded}) => {
-    const {register, handleSubmit, reset} = useForm<CommentForm>();
+    const [error, setError] = useState<string | null>(null);
+    const {register, handleSubmit, reset} = useForm<ICommentForm>();
 
-    const onSubmit: SubmitHandler<CommentForm> = async (data) => {
-        const newComment = await addComment(orderId, data.body);
-        if (newComment) {
-            onCommentAdded(newComment);
-            reset();
-        }
+    const onSubmit: SubmitHandler<ICommentForm> = (data) => {
+        addComment(orderId, data.body)
+            .then((newComment) => {
+                onCommentAdded(newComment);
+                reset();
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            {error && <p className="text-danger">{error}</p>}
             <div className="mb-3 m-2">
         <textarea
             {...register("body", {required: true})}

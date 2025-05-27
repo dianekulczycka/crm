@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class ManagerService implements UserDetailsService {
                 3,
                 Sort.by("id")
                         .descending());
-        Page<Manager> managersPage = managerRepository.findByRoleNot(Role.ROLE_ADMIN, pageable);
+        Page<Manager> managersPage = managerRepository.findAll(pageable);
 
         List<ManagerDto> managerDtos = managersPage.getContent()
                 .stream()
@@ -75,6 +76,11 @@ public class ManagerService implements UserDetailsService {
         Manager admin = managerRepository.findByEmail(jwtUtility.extractUsername(token))
                 .orElseThrow(() -> new RuntimeException("Invalid role, unable to create a manager"));
 
+        Optional<Manager> existingManager = managerRepository.findByEmail(dto.getEmail());
+        if (existingManager.isPresent()) {
+            throw new RuntimeException("Manager with this email already exists");
+        }
+
         if (admin.getRole() == Role.ROLE_ADMIN) {
             Manager manager = new Manager();
             manager.setEmail(dto.getEmail());
@@ -102,5 +108,4 @@ public class ManagerService implements UserDetailsService {
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with provided email was not found"));
     }
-
 }

@@ -32,7 +32,7 @@ crm/
 │   │   ├── interfaces/
 │   │   ├── layouts/
 │   │   ├── pages/
-│   │   ├── router/sS
+│   │   ├── router/
 │   │   ├── services/
 │   │   ├── index.css
 │   │   ├── index.tsx
@@ -53,14 +53,16 @@ Back:
 - Springdoc OpenAPI
 - JWT
 Front:
-- React + Typescript, React Router, React Hook Form
+- React + Typescript, React router, React hook form, React paginate
 - Axios for API calls
-- Bootstrap 5 for styling
-- Day.js
+- Bootstrap 5 - styling
+- Day.js, file-saver, use-debounce - 3rd party libraries
 
 API docs: 
 - Swagger: http://localhost:8080/swagger-ui.html
 - Open API json: http://localhost:8080/v3/api-docs
+
+Postman collection: ./CRM.postman_collection.json
 
 How to run:
 ! before running, please terminate operations on localhost:8080 and localhost:3000
