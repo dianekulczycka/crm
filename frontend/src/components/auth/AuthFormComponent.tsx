@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import {login} from "../../api/authService";
+import {logIn} from "../../api/authService";
 import {Button} from "react-bootstrap";
 
 interface IFormData {
@@ -19,7 +19,7 @@ const AuthFormComponent: FC = () => {
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<IFormData> = (data) => {
-        login(data)
+        logIn(data)
             .then(() => {
                 navigate("/orders?page=1&order=id&direction=desc");
             })

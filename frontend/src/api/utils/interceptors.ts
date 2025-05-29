@@ -1,7 +1,7 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {IErrorResponse} from "../../interfaces/error/IErrorResponse";
-import {getAccessToken} from "./tokenUtil";
+import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
+import {authService} from "../../context/AuthContext";
 import {refreshAccessToken} from "../authService";
+import {IErrorResponse} from "../../interfaces/error/IErrorResponse";
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: "",
@@ -10,7 +10,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = getAccessToken();
+        const token = authService?.getAccessToken?.();
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
         }
@@ -20,15 +20,22 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
+    (response: AxiosResponse): AxiosResponse => response,
+    async (error: AxiosError<IErrorResponse>): Promise<AxiosResponse | Promise<never>> => {
+        const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            const newAccessToken = await refreshAccessToken();
-            if (newAccessToken) {
-                originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-                return axios(originalRequest);
+            try {
+                const newAccessToken: string = await refreshAccessToken();
+                if (newAccessToken) {
+                    originalRequest.headers = {
+                        ...originalRequest.headers,
+                        Authorization: `Bearer ${newAccessToken}`,
+                    };
+                    return axios(originalRequest);
+                }
+            } catch (refreshError) {
+                return Promise.reject(refreshError);
             }
         }
         return Promise.reject(error);

@@ -1,4 +1,4 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {Control, Controller} from "react-hook-form";
 import {ICreateManagerRequest} from "../../interfaces/manager/ICreateManagerRequest";
@@ -8,13 +8,15 @@ export interface IProps {
     onClose: () => void;
     onSubmit: () => void;
     control: Control<ICreateManagerRequest>;
+    error: string | null;
 }
 
-export const CreateManagerModalComponent: FC<IProps> = ({isOpen, onClose, onSubmit, control}) => {
+export const CreateManagerModalComponent: FC<IProps> = ({isOpen, onClose, onSubmit, control, error}) => {
     return (
         <Modal show={isOpen} onHide={onClose}>
             <Modal.Header closeButton/>
             <Modal.Body>
+                {error && <p className="text-danger">{error}</p>}
                 <form onSubmit={onSubmit}>
                     <div className="mb-3">
                         <label>email</label>

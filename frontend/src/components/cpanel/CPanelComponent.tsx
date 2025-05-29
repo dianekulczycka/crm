@@ -23,7 +23,13 @@ const CPanelComponent: FC<IProps> = ({stats, managers, refreshManagers}) => {
         control,
         handleSubmit,
         reset
-    } = useForm<ICreateManagerRequest>({});
+    } = useForm<ICreateManagerRequest>({
+        defaultValues: {
+            email: "",
+            name: "",
+            surname: "",
+        },
+    });
 
     const onSubmit: SubmitHandler<ICreateManagerRequest> = (data) => {
         addManager(data)
@@ -43,13 +49,13 @@ const CPanelComponent: FC<IProps> = ({stats, managers, refreshManagers}) => {
 
     return (
         <div className="d-flex flex-column align-items-start w-100">
-            {error && <p className="text-danger">{error}</p>}
             <OrdersStatsComponent stats={stats}/>
             <Button className="btn btn-success mx-5 fs-4" onClick={() => setModalOpen(true)}>
                 Create manager
             </Button>
             <ManagersListComponent refreshManagers={refreshManagers} managers={managers}/>
             <CreateManagerModalComponent
+                error={error}
                 isOpen={isModalOpen}
                 onClose={onClose}
                 onSubmit={handleSubmit(onSubmit)}

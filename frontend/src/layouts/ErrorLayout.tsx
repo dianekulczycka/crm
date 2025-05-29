@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import ErrorPage from "../pages/ErrorPage";
 import HeaderComponent from "../components/HeaderComponent";
-import {getAccessToken} from "../api/utils/tokenUtil";
+import {useAuth} from "../context/AuthContext";
 
 const ErrorLayout: FC = () => {
-    const isAuthed: boolean = !!getAccessToken();
+    const {accessToken} = useAuth();
+    const isAuthed: boolean = !!accessToken;
 
     return (
         <div>

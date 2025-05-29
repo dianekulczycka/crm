@@ -1,10 +1,11 @@
 import {Navigate, Outlet} from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import {FC} from "react";
-import {getAccessToken} from "../api/utils/tokenUtil";
+import {useAuth} from "../context/AuthContext";
 
 const MainLayout: FC = () => {
-    const isAuthed: boolean = !!getAccessToken();
+    const {accessToken} = useAuth();
+    const isAuthed: boolean = !!accessToken;
 
     if (!isAuthed) {
         return <Navigate to="/login" replace/>;

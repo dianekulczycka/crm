@@ -1,9 +1,10 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {FC} from "react";
-import {getAccessToken} from "../api/utils/tokenUtil";
+import {useAuth} from "../context/AuthContext";
 
 const AuthLayout: FC = () => {
-    const isAuthed: boolean = !!getAccessToken();
+    const {accessToken} = useAuth();
+    const isAuthed: boolean = !!accessToken;
     if (isAuthed) {
         return <Navigate to="/orders" replace/>;
     }
