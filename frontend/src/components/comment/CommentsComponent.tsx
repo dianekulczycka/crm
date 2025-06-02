@@ -7,6 +7,7 @@ import CommentComponent from "./CommentComponent";
 import PreloaderComponent from "../PreloaderComponent";
 import OrderChangeModalComponent from "../modals/OrderChangeModalComponent";
 import {Button} from "react-bootstrap";
+import ErrorComponent from "../ErrorComponent";
 
 interface IProps {
     order: IOrder;
@@ -49,7 +50,6 @@ const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
 
     return (
         <>
-            {error && <p className="text-danger">{error}</p>}
             {isLoaded ? (
                 <tr>
                     <td colSpan={5}>
@@ -65,6 +65,7 @@ const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
                             </ul>
                         )}
                         <CommentFormComponent orderId={order.id} onCommentAdded={onCommentAdded}/>
+                        <ErrorComponent error={error} />
                     </td>
                     <td colSpan={1}>
                         <Button className="btn btn-success m-4 p-2" onClick={onModalOpen}>edit</Button>

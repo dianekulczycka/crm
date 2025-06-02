@@ -43,7 +43,6 @@ const CPanelComponent: FC<IProps> = ({stats, managers, refreshManagers}) => {
 
     return (
         <div className="d-flex flex-column align-items-start w-100">
-            {error && <p className="text-danger">{error}</p>}
             <OrdersStatsComponent stats={stats}/>
             <Button className="btn btn-success mx-5 fs-4" onClick={() => setModalOpen(true)}>
                 Create manager
@@ -54,6 +53,7 @@ const CPanelComponent: FC<IProps> = ({stats, managers, refreshManagers}) => {
                 onClose={onClose}
                 onSubmit={handleSubmit(onSubmit)}
                 control={control}
+                error={error}
             />
         </div>
     );

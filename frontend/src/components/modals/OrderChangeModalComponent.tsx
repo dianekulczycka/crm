@@ -3,6 +3,7 @@ import {Controller, useForm} from "react-hook-form";
 import {editOrder} from "../../api/ordersService";
 import {IOrder} from "../../interfaces/order/IOrder";
 import {Button, Modal} from "react-bootstrap";
+import ErrorComponent from "../ErrorComponent";
 
 interface IProps {
     onClose: () => void;
@@ -46,8 +47,8 @@ const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups, 
             age: updatedFields.age ?? 0,
         })
             .then(() => {
-            onClose();
-            refreshOrders();
+                onClose();
+                refreshOrders();
             })
             .catch((error) => {
                 setError(error);
@@ -59,6 +60,7 @@ const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups, 
             <Modal.Header closeButton/>
             <Modal.Body>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <ErrorComponent error={error}/>
                     <select
                         className="form-select"
                         value={selectedGroup}
@@ -69,9 +71,8 @@ const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups, 
                             setUpdatedFields(prev => ({...prev, groupName: e.target.value || null}));
                         }}
                         disabled={!!newGroupName.trim()}>
-                        {groups.map((name, i) => <option key={i} value={name}>{name}</option>)}
+                        {groups.map((name, index) => <option key={index} value={name}>{name}</option>)}
                     </select>
-
                     <input
                         type="text"
                         className="form-control mt-2"
@@ -88,9 +89,6 @@ const OrderChangeModalComponent: FC<IProps> = ({onClose, order, isOpen, groups, 
                         placeholder="new group name"
                         disabled={!!selectedGroup}
                     />
-
-                    {error && <p className="text-danger mt-2">{error}</p>}
-
                     <div className="mb-3">
                         <label>Name</label>
                         <Controller

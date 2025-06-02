@@ -30,8 +30,10 @@ public class ManagerController {
     }
 
     @PutMapping("/ban/{id}")
-    public ResponseEntity<Void> toggleBanStatus(@PathVariable Long id) {
-        managerService.toggleBan(id);
+    public ResponseEntity<Void> toggleBanStatus(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token) {
+        managerService.toggleBan(id, token.replace("Bearer ", ""));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

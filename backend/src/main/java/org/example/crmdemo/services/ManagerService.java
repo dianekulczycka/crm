@@ -95,11 +95,19 @@ public class ManagerService implements UserDetailsService {
         }
     }
 
-    public void toggleBan(Long id) {
-        Manager manager = managerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Manager not found"));
-        manager.setIsBanned(!manager.getIsBanned());
-        managerRepository.save(manager);
+    public void toggleBan(Long id, String token) {
+        Manager managerToBan = managerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Manager to ban not found"));
+
+        Manager admin = managerRepository.findByEmail(jwtUtility.extractUsername(token))
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        if (managerToBan.getId().equals(admin.getId())) {
+            throw new RuntimeException("You cannot ban yourself");
+        }
+
+        managerToBan.setIsBanned(!managerToBan.getIsBanned());
+        managerRepository.save(managerToBan);
     }
 
     @Override

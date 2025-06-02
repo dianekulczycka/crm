@@ -3,6 +3,7 @@ import {IManager} from "../../../interfaces/manager/IManager";
 import {Button} from "react-bootstrap";
 import {toggleBanStatus} from "../../../api/managerService";
 import {requestPasswordToken} from "../../../api/authService";
+import ErrorComponent from "../../ErrorComponent";
 
 interface IProps {
     manager: IManager;
@@ -37,7 +38,7 @@ export const ActivateBanButtonsComponent: FC<IProps> = ({manager, refreshManager
 
     return (
         <div className="d-flex flex-column justify-content-evenly">
-            {error && <p className="text-danger">{error}</p>}
+            <ErrorComponent error={error} />
             <Button className="btn btn-success mx-3 fs-4"
                     onClick={onSetPassword}>{manager.isActive ? "recover pass" : "activate"}</Button>
             <Button className="btn btn-success mx-3 fs-4" onClick={toggleBan} disabled={manager.isBanned}>ban</Button>

@@ -3,6 +3,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {addComment} from "../../api/commentsService";
 import {IComment} from "../../interfaces/comment/IComment";
 import {Button} from "react-bootstrap";
+import ErrorComponent from "../ErrorComponent";
 
 interface IProps {
     orderId: number;
@@ -30,7 +31,7 @@ const CommentFormComponent: FC<IProps> = ({orderId, onCommentAdded}) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {error && <p className="text-danger">{error}</p>}
+            <ErrorComponent error={error} />
             <div className="mb-3 m-2">
         <textarea
             {...register("body", {required: true})}

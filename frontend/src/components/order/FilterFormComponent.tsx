@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExport, defaultValues}) => {
-    const {register, watch} = useForm<Partial<IFilter>>({defaultValues});
+    const {register, watch, reset} = useForm<Partial<IFilter>>({defaultValues});
     const watchedValues = watch();
     const [debouncedFilters] = useDebounce(watchedValues, 1000);
 
@@ -29,6 +29,11 @@ export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExpor
         };
         onFilterChange(formattedData);
     }, [debouncedFilters]);
+
+    const onReset = () => {
+        reset({});
+        onFilterChange({});
+    };
 
     return (
         <form>
@@ -94,7 +99,8 @@ export const FilterFormComponent: FC<IProps> = ({groups, onFilterChange, onExpor
 
                     <input {...register("startDate")} type="date" className="form-control m-2"/>
                     <input {...register("endDate")} type="date" className="form-control m-2"/>
-                    <Button type="button" onClick={onExport} className="btn btn-success m-2">Excel</Button>
+                    <Button type="button" onClick={onExport} className="btn btn-success m-2">excel</Button>
+                    <Button type="button" onClick={onReset} className="btn btn-success m-2">reset</Button>
                 </div>
             </div>
         </form>

@@ -3,6 +3,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {login} from "../../api/authService";
 import {Button} from "react-bootstrap";
+import ErrorComponent from "../ErrorComponent";
 
 interface IFormData {
     email: string;
@@ -31,7 +32,7 @@ const AuthFormComponent: FC = () => {
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
-            {error && <p className="text-danger">{error}</p>}
+            <ErrorComponent error={error} />
             <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
                 <input
                     {...register("email", {

@@ -7,6 +7,7 @@ import {IManager} from "../interfaces/manager/IManager";
 import {getManagers} from "../api/managerService";
 import PaginationComponent from "../components/pagination/PaginationComponent";
 import {useSearchParams} from "react-router-dom";
+import ErrorComponent from "../components/ErrorComponent";
 
 const CPanelPage: FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -62,7 +63,7 @@ const CPanelPage: FC = () => {
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-evenly p-4 w-100">
-            {error && <p className="text-danger">{error}</p>}
+            <ErrorComponent error={error} />
             {isLoaded ?
                 <>
                     <CPanelComponent refreshManagers={refreshManagers} managers={managers} stats={stats}/>

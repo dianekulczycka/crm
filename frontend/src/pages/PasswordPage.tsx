@@ -3,6 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IPasswordUpdate} from "../interfaces/auth/IPasswordUpdate";
 import {setManagerPassword} from "../api/authService";
+import ErrorComponent from "../components/ErrorComponent";
 
 
 const PasswordPage = () => {
@@ -30,7 +31,7 @@ const PasswordPage = () => {
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
-            {error && <p className="text-danger">{error}</p>}
+            <ErrorComponent error={error} />
             <h1 className="text-success m-4">Set Your Password</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
                 <input

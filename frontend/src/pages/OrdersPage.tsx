@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import OrdersComponent from "../components/order/OrdersComponent";
 import PaginationComponent from "../components/pagination/PaginationComponent";
 import PreloaderComponent from "../components/PreloaderComponent";
@@ -9,16 +9,17 @@ import {ISearchParams} from "../interfaces/order/ISearchParams";
 import FilterFormComponent from "../components/order/FilterFormComponent";
 import {saveAs} from "file-saver";
 import dayjs from "dayjs";
+import ErrorComponent from "../components/ErrorComponent";
 
 const OrdersPage: FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const lastSearchParams = useRef<Partial<ISearchParams>>({});
     const [ordersPaginated, setOrdersPaginated] = useState<IOrder[]>([]);
     const [groups, setGroups] = useState<string[]>([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [total, setTotal] = useState<number>(0);
     const [perPage, setPerPage] = useState<number>(0);
     const [error, setError] = useState<string | null>(null);
-
     const page = Number(searchParams.get("page")) || 1;
     const order = searchParams.get("order") || "id";
     const direction = searchParams.get("direction") || "desc";
@@ -45,7 +46,7 @@ const OrdersPage: FC = () => {
         if (!searchParams.has("page")) {
             setSearchParams({...Object.fromEntries(searchParams.entries()), page: "1"});
         }
-    }, []);
+    }, [searchParams]);
 
     const loadOrders = () => {
         setIsLoaded(false);
@@ -100,10 +101,17 @@ const OrdersPage: FC = () => {
                 formattedParams[key] = "true";
             }
         });
-        if (searchParams.has("page")) {
-            formattedParams.page = searchParams.get("page")!;
-        }
-        setSearchParams(formattedParams);
+
+        const lastFilters = lastSearchParams.current;
+        const hasChanged = JSON.stringify(lastFilters) !== JSON.stringify(formattedParams);
+        if (hasChanged) lastSearchParams.current = formattedParams;
+
+        setSearchParams({
+            ...formattedParams,
+            order: searchParams.get("order") || "",
+            direction: searchParams.get("direction") || "",
+            page: hasChanged ? "1" : (searchParams.get("page") || "1")
+        });
     };
 
     const updateSorting = (newOrder: string): void => {
@@ -112,7 +120,8 @@ const OrdersPage: FC = () => {
         setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
             order: newOrder,
-            direction: newDirection
+            direction: newDirection,
+            page: "1"
         });
     };
 
@@ -136,7 +145,7 @@ const OrdersPage: FC = () => {
         <div>
             {isLoaded ? (
                 <div className="d-flex flex-column align-items-center justify-content-evenly">
-                    {error && <p className="text-danger">{error}</p>}
+                    <ErrorComponent error={error}/>
                     <FilterFormComponent
                         groups={groups}
                         onFilterChange={onFilterChange}
