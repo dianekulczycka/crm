@@ -1,5 +1,4 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {IErrorResponse} from "../../interfaces/error/IErrorResponse";
+import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {getAccessToken, logout} from "./tokenUtil";
 import {refreshAccessToken} from "../authService";
 
@@ -9,7 +8,7 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-    (config) => {
+    (config: InternalAxiosRequestConfig) => {
         const token = getAccessToken();
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
@@ -21,45 +20,42 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
-    async (error) => {
-        const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            try {
-                const newAccessToken = await refreshAccessToken();
-                if (newAccessToken) {
-                    originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-                    return axios(originalRequest);
-                }
-            } catch (err: any) {
-                const msg = err.response?.data?.msg || "error, something went wrong";
-                console.warn(msg);
-                logout();
-                return Promise.reject(err);
-            }
-        }
-        return Promise.reject(error);
-    }
-);
+    async (error: AxiosError) => {
+        const originalRequest = error.config as InternalAxiosRequestConfig & {
+            _retry?: boolean;
+        };
 
-axiosInstance.interceptors.response.use(
-    (res: AxiosResponse) => res,
-    (err: AxiosError<IErrorResponse>) => {
-        const msg = err.response?.data?.msg || "error, something went wrong";
-        console.warn(msg);
-        return Promise.reject(err);
-    }
-);
+        const status = error.response?.status;
+        const data = error.response?.data;
 
-axiosInstance.interceptors.response.use(
-    (res: AxiosResponse) => res,
-    (err) => {
-        const msg = err.response?.data;
+        const msg =
+            typeof data === "string"
+                ? data
+                : (data as { msg?: string })?.msg || "unauthed or banned";
+
         console.warn(msg);
+
         if (msg === "Account banned") {
             logout();
+            return Promise.reject(error);
         }
-        return Promise.reject(err);
+
+        if (status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            try {
+                const newToken = await refreshAccessToken();
+                if (newToken) {
+                    originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+                    return axios(originalRequest);
+                }
+            } catch (refreshError: any) {
+                logout();
+                return Promise.reject(refreshError);
+            }
+        }
+
+        if (status === 401) logout();
+        return Promise.reject(error);
     }
 );
 
