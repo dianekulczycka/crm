@@ -27,7 +27,7 @@ const OrderComponent: FC<IProps> = ({order, groups, isExpanded, onClick, refresh
                 <td>{order.sum ?? "null"}</td>
                 <td>{order.alreadyPaid ?? "null"}</td>
                 <td>{order.createdAt?.replace("T", " ") || "null"}</td>
-                <td>{order.manager || "null"}</td>
+                <td>{order.managerSurname || "null"}</td>
                 <td>{order.groupName || "null"}</td>
             </tr>
             {isExpanded && <CommentsComponent

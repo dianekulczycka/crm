@@ -8,6 +8,7 @@ import PreloaderComponent from "../PreloaderComponent";
 import OrderChangeModalComponent from "../modals/OrderChangeModalComponent";
 import {Button} from "react-bootstrap";
 import ErrorComponent from "../ErrorComponent";
+import {getAccessToken, getUserDataFromToken} from "../../api/utils/tokenUtil";
 
 interface IProps {
     order: IOrder;
@@ -20,6 +21,8 @@ const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const {email: loggedManagerEmail} = getUserDataFromToken(getAccessToken() ?? "");
+    const canEdit = order.managerEmail === loggedManagerEmail || order.managerEmail == null;
 
     useEffect(() => {
         setIsLoaded(false);
@@ -45,8 +48,7 @@ const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
 
     const onModalClose = () => {
         setIsModalOpen(false);
-    };
-
+    }
 
     return (
         <>
@@ -64,11 +66,16 @@ const CommentsComponent: FC<IProps> = ({order, groups, refreshOrders}) => {
                                 ))}
                             </ul>
                         )}
-                        <CommentFormComponent orderId={order.id} onCommentAdded={onCommentAdded}/>
-                        <ErrorComponent error={error} />
+                        <CommentFormComponent
+                            orderId={order.id}
+                            onCommentAdded={onCommentAdded}
+                            canEdit={canEdit}
+                        />
+                        <ErrorComponent error={error}/>
                     </td>
                     <td colSpan={1}>
-                        <Button className="btn btn-success m-4 p-2" onClick={onModalOpen}>edit</Button>
+                        <Button className="btn btn-success m-4 p-2" disabled={!canEdit}
+                                onClick={onModalOpen}>edit</Button>
                     </td>
                 </tr>) : <PreloaderComponent/>
             }

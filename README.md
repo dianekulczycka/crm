@@ -53,10 +53,11 @@ crm/
 - JWT
  
 ### Front:
-- React + Typescript, React router, React hook form, React paginate
-- Axios for API calls
-- Bootstrap 5 - styling
-- Day.js, file-saver, use-debounce - 3rd party libraries
+- React + Typescript, react-router-dom, react-hook-form, react-paginate
+- API calls - axios 
+- Styling - react-bootstrap
+- Handling JWTs - jwt-decode
+- Other 3rd party libraries - day.js, file-saver, use-debounce
 
 ## API docs: 
 - Swagger: [http://localhost:8080/swagger-ui.html]

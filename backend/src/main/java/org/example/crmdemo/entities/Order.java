@@ -41,7 +41,9 @@ public class Order {
     private String utm;
     private String msg;
     private String status;
-    private String manager;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "manager_id")
+    private Manager manager;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "group_id")
     private Group group;

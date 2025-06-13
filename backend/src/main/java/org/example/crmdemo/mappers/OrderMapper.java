@@ -34,7 +34,8 @@ public class OrderMapper {
                 .utm(order.getUtm())
                 .msg(order.getMsg())
                 .status(order.getStatus())
-                .manager(order.getManager())
+                .managerSurname(order.getManager() != null ? order.getManager().getSurname() : null)
+                .managerEmail(order.getManager() != null ? order.getManager().getEmail() : null)
                 .groupName(order.getGroup() != null ? order.getGroup().getName() : null)
                 .build();
     }

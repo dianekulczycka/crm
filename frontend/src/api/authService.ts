@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
 import {IAuthResponse} from "../interfaces/auth/IAuthResponse";
 import {IAuthRequest} from "../interfaces/auth/IAuthRequest";
-import {getRefreshToken, setAccessToken, setRefreshToken, setUserName, setUserRole} from "./utils/tokenUtil";
+import {getRefreshToken, setAccessToken, setRefreshToken, setUserName} from "./utils/tokenUtil";
 import {BASE_URL} from "./utils/consts";
 import {IPasswordUpdate} from "../interfaces/auth/IPasswordUpdate";
 import axiosInstance from "./utils/interceptors";
@@ -16,7 +16,6 @@ export const login = async (authData: IAuthRequest): Promise<void> => {
         setAccessToken(response.data.accessToken);
         setRefreshToken(response.data.refreshToken);
         setUserName(response.data.name);
-        setUserRole(response.data.role);
     } catch (error: any) {
         throw new Error(error.response?.data?.msg || "log in failed");
     }

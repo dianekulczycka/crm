@@ -8,7 +8,7 @@ import {getManagers} from "../api/managerService";
 import PaginationComponent from "../components/pagination/PaginationComponent";
 import {useSearchParams} from "react-router-dom";
 import ErrorComponent from "../components/ErrorComponent";
-import {getUserRole} from "../api/utils/tokenUtil";
+import {getAccessToken, getUserDataFromToken} from "../api/utils/tokenUtil";
 
 const CPanelPage: FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -19,9 +19,7 @@ const CPanelPage: FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [perPage, setPerPage] = useState<number>(0);
     const page = Number(searchParams.get("page")) || 1;
-
-    const role = getUserRole();
-    const isAdmin = role === "ROLE_ADMIN";
+    const {role} = getUserDataFromToken(getAccessToken() ?? "");
 
     useEffect(() => {
         if (!searchParams.has("page")) {
@@ -70,7 +68,7 @@ const CPanelPage: FC = () => {
             <ErrorComponent error={error}/>
             {!isLoaded ? (
                 <PreloaderComponent/>
-            ) : !isAdmin ? (
+            ) : !(role === "ROLE_ADMIN") ? (
                 <p className="text-danger">only admin can view</p>
             ) : (
                 <>

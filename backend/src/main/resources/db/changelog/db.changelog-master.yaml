@@ -114,7 +114,7 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_comments_orders
                     references: orders(id)
-                    onDelete: CASCADE
+
               - column:
                   name: body
                   type: VARCHAR(255)
@@ -164,7 +164,7 @@ databaseChangeLog:
                     nullable: true
                     foreignKeyName: fk_orders_groups
                     references: groups(id)
-                    onDelete: SET NULL
+
   - changeSet:
       id: 1.0.6
       author: dina
@@ -178,3 +178,31 @@ databaseChangeLog:
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 1.0.7
+      author: dina
+      preConditions:
+        - onFail: MARK_RAN
+        - columnExists:
+            tableName: orders
+            columnName: manager
+      changes:
+        - dropColumn:
+            columnName: manager
+            tableName: orders
+  - changeSet:
+      id: 1.0.8
+      author: dina
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - columnExists:
+                tableName: orders
+                columnName: manager_id
+      changes:
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: manager_id
+                  type: BIGINT

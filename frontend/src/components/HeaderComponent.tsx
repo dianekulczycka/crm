@@ -1,12 +1,11 @@
 import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
-import {getUserName, getUserRole, logout} from "../api/utils/tokenUtil";
+import {getAccessToken, getUserDataFromToken, getUserName, logout} from "../api/utils/tokenUtil";
 
 const HeaderComponent: FC = () => {
     const username = getUserName();
-    const role = getUserRole();
-    const isAdmin = role === "ROLE_ADMIN";
+    const {role} = getUserDataFromToken(getAccessToken() ?? "");
 
     return (
         <div className="d-flex justify-content-end align-items-center bg-success-subtle shadow-sm">
@@ -15,7 +14,7 @@ const HeaderComponent: FC = () => {
                     <p className="fs-5 m-auto">Current user: {username} </p>
                 </li>
                 {
-                    isAdmin &&
+                    role === "ROLE_ADMIN" &&
                     <li>
                         <Link to="/cpanel" className="btn btn-success m-2 fs-6">cPanel</Link>
                     </li>

@@ -44,7 +44,7 @@ public class ManagerService implements UserDetailsService {
         List<ManagerDto> managerDtos = managersPage.getContent()
                 .stream()
                 .map(manager -> {
-                    List<StatDto> stats = orderRepository.findAllByManager(manager.getSurname())
+                    List<StatDto> stats = orderRepository.findAllByManager(manager)
                             .stream()
                             .collect(Collectors.groupingBy(
                                     order -> order.getStatus() == null ? "Not assigned" : order.getStatus(),

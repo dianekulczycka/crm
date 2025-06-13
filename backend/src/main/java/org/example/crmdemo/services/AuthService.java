@@ -55,7 +55,6 @@ public class AuthService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .name(manager.getName())
-                .role(manager.getRole())
                 .build();
     }
 
@@ -81,7 +80,6 @@ public class AuthService {
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .name(manager.getName())
-                .role(manager.getRole())
                 .build();
     }
 

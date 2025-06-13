@@ -33,12 +33,12 @@ public class CommentService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (order.getManager() != null && !order.getManager().equals(manager.getSurname())) {
+        if (order.getManager() != null && !order.getManager().getSurname().equals(manager.getSurname())) {
             throw new RuntimeException("You can only comment on your orders");
         }
 
         Comment comment = createComment(dto, order, manager);
-        order.setManager(manager.getSurname());
+        order.setManager(manager);
 
         if (order.getStatus() == null) {
             order.setStatus("In Work");

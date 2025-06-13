@@ -62,10 +62,9 @@ public class OrderService {
                                                                 SortDto sortDto,
                                                                 String token) {
         Pageable pageable = createPageable(sortDto.getPage(), sortDto.getOrder(), sortDto.getDirection());
-        String managerSurname = null;
-
+        Manager manager = null;
         if (Boolean.TRUE.equals(filterDto.getIsAssignedToMe())) {
-            managerSurname = getManagerFromToken(token).getSurname();
+            manager = getManagerFromToken(token);
         }
 
         Page<Order> ordersPage = orderRepository.findOrdersFiltered(
@@ -80,7 +79,7 @@ public class OrderService {
                 filterDto.getGroupName(),
                 filterDto.getStartDate() != null ? filterDto.getStartDate().atStartOfDay() : null,
                 filterDto.getEndDate() != null ? filterDto.getEndDate().atStartOfDay() : null,
-                managerSurname,
+                manager,
                 pageable
         );
         return retrieveOrdersFromRepo(pageable, ordersPage);
@@ -115,12 +114,12 @@ public class OrderService {
 
     @Transactional
     public void updateOrder(Long orderId, OrderDto orderDto, String token) {
-        String managerSurname = getManagerFromToken(token).getSurname();
+        Manager manager = getManagerFromToken(token);
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (order.getManager() != null && !order.getManager().equals(managerSurname)) {
+        if (order.getManager() != null && !order.getManager().equals(manager)) {
             throw new RuntimeException("You can only update your orders");
         }
 
@@ -138,17 +137,16 @@ public class OrderService {
         if ("New".equalsIgnoreCase(order.getStatus())) {
             order.setManager(null);
         } else {
-            order.setManager(managerSurname);
+            order.setManager(manager);
         }
 
         orderRepository.save(order);
     }
 
     public byte[] exportToExcel(ExportRequestDto exportRequestDto, String token) {
-        String managerSurname = null;
-
+        Manager manager = null;
         if (Boolean.TRUE.equals(exportRequestDto.getIsAssignedToMe())) {
-            managerSurname = getManagerFromToken(token).getSurname();
+            manager = getManagerFromToken(token);
         }
 
         Sort sort = Sort.by(
@@ -170,7 +168,7 @@ public class OrderService {
                 exportRequestDto.getGroupName(),
                 exportRequestDto.getStartDate() != null ? exportRequestDto.getStartDate().atStartOfDay() : null,
                 exportRequestDto.getEndDate() != null ? exportRequestDto.getEndDate().atStartOfDay() : null,
-                managerSurname,
+                manager,
                 sort
         );
 

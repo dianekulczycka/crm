@@ -8,13 +8,14 @@ import ErrorComponent from "../ErrorComponent";
 interface IProps {
     orderId: number;
     onCommentAdded: (comment: IComment) => void;
+    canEdit: boolean;
 }
 
 interface ICommentForm {
     body: string;
 }
 
-const CommentFormComponent: FC<IProps> = ({orderId, onCommentAdded}) => {
+const CommentFormComponent: FC<IProps> = ({orderId, onCommentAdded, canEdit}) => {
     const [error, setError] = useState<string | null>(null);
     const {register, handleSubmit, reset} = useForm<ICommentForm>();
 
@@ -31,15 +32,16 @@ const CommentFormComponent: FC<IProps> = ({orderId, onCommentAdded}) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <ErrorComponent error={error} />
+            <ErrorComponent error={error}/>
             <div className="mb-3 m-2">
         <textarea
             {...register("body", {required: true})}
             className="form-control"
             placeholder="comment"
+            disabled={!canEdit}
         />
             </div>
-            <Button type="submit" className="btn btn-success float-end">send</Button>
+            <Button type="submit" disabled={!canEdit} className="btn btn-success float-end">send</Button>
         </form>
     );
 };
