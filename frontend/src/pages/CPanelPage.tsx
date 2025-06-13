@@ -8,6 +8,7 @@ import {getManagers} from "../api/managerService";
 import PaginationComponent from "../components/pagination/PaginationComponent";
 import {useSearchParams} from "react-router-dom";
 import ErrorComponent from "../components/ErrorComponent";
+import {getUserRole} from "../api/utils/tokenUtil";
 
 const CPanelPage: FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +19,9 @@ const CPanelPage: FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [perPage, setPerPage] = useState<number>(0);
     const page = Number(searchParams.get("page")) || 1;
+
+    const role = getUserRole();
+    const isAdmin = role === "ROLE_ADMIN";
 
     useEffect(() => {
         if (!searchParams.has("page")) {
@@ -63,19 +67,24 @@ const CPanelPage: FC = () => {
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-evenly p-4 w-100">
-            <ErrorComponent error={error} />
-            {isLoaded ?
+            <ErrorComponent error={error}/>
+            {!isLoaded ? (
+                <PreloaderComponent/>
+            ) : !isAdmin ? (
+                <p className="text-danger">only admin can view</p>
+            ) : (
                 <>
                     <CPanelComponent refreshManagers={refreshManagers} managers={managers} stats={stats}/>
-                    <PaginationComponent total={total}
-                                         perPage={perPage} page={page}
-                                         setSearchParams={setSearchParams}/>
+                    <PaginationComponent
+                        total={total}
+                        perPage={perPage}
+                        page={page}
+                        setSearchParams={setSearchParams}
+                    />
                 </>
-                :
-                <PreloaderComponent/>
-            }
+            )}
         </div>
     );
-};
+}
 
 export default CPanelPage;

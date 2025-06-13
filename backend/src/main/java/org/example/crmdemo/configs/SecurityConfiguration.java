@@ -2,6 +2,7 @@ package org.example.crmdemo.configs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.example.crmdemo.repositories.ManagerRepository;
 import org.example.crmdemo.security.filter.JwtAuthFilter;
 import org.example.crmdemo.services.ManagerService;
 import org.example.crmdemo.utilities.JwtUtility;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
     private final PasswordEncoder passwordEncoderConfig;
     private final ManagerService managerService;
     private final JwtUtility jwtUtility;
+    private final ManagerRepository managerRepository;
 
     @Bean
     public AuthenticationProvider authProvider() {
@@ -48,7 +50,7 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(jwtUtility, managerService);
+        return new JwtAuthFilter(jwtUtility, managerService, managerRepository);
     }
 
     @Bean

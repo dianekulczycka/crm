@@ -39,7 +39,8 @@ public class OrderDto {
     @Size(max = 100, message = "Message: 100 symbols max")
     private String msg;
     private String status;
-    private String manager;
+    private String managerEmail;
+    private String managerSurname;
     @Size(max = 50, message = "Group name: 50 symbols max")
     private String groupName;
 }

@@ -57,7 +57,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/v1/api/auth//refresh-token",
+							"raw": "localhost:8080/v1/api/auth/refresh-token",
 							"host": [
 								"localhost"
 							],

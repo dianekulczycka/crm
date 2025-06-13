@@ -21,6 +21,7 @@ public class ManagerMapper {
                 .isActive(manager.getIsActive())
                 .lastLogin(manager.getLastLogIn() != null ? manager.getLastLogIn() : null)
                 .isBanned(manager.getIsBanned())
+                .role(manager.getRole().toString())
                 .stats(stats)
                 .build();
     }

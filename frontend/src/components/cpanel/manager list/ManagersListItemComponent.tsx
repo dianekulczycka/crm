@@ -30,7 +30,9 @@ const ManagersListItemComponent: FC<IProps> = ({manager, refreshManagers}) => {
                     </ul>
                 ) : <p className="m-1 fs-4"> no stats yet </p>}
             </div>
-            <ActivateBanButtonsComponent manager={manager} refreshManagers={refreshManagers}/>
+            {manager.role !== "ROLE_ADMIN" && (
+                <ActivateBanButtonsComponent manager={manager} refreshManagers={refreshManagers}/>
+            )}
         </div>
     );
 };

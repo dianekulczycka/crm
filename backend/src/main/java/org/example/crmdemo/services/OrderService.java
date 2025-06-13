@@ -124,21 +124,25 @@ public class OrderService {
             throw new RuntimeException("You can only update your orders");
         }
 
-        order.setManager(managerSurname);
-
-        if (order.getStatus() == null) {
-            order.setStatus("In Work");
-        }
+        orderMapper.updateEntity(order, orderDto);
 
         if (orderDto.getGroupName() != null) {
             Group group = groupService.getOrCreateGroup(orderDto.getGroupName().toUpperCase());
             order.setGroup(group);
         }
 
-        orderMapper.updateEntity(order, orderDto);
+        if (order.getStatus() == null) {
+            order.setStatus("In Work");
+        }
+
+        if ("New".equalsIgnoreCase(order.getStatus())) {
+            order.setManager(null);
+        } else {
+            order.setManager(managerSurname);
+        }
+
         orderRepository.save(order);
     }
-
 
     public byte[] exportToExcel(ExportRequestDto exportRequestDto, String token) {
         String managerSurname = null;

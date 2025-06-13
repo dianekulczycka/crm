@@ -21,5 +21,6 @@ public class ManagerDto {
     private Boolean isActive;
     private LocalDateTime lastLogin;
     private Boolean isBanned;
+    private String role;
     private List<StatDto> stats;
 }

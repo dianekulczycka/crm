@@ -19,3 +19,8 @@ export const setUserRole = (userRole: string): void => {
     localStorage.setItem("userRole", userRole);
 };
 
+export const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+};
+

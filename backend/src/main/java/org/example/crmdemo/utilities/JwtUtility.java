@@ -39,7 +39,7 @@ public class JwtUtility {
             throw new IllegalArgumentException("JWT secret is null");
         }
         key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
+        jwtParser = Jwts.parserBuilder().setSigningKey(key).setAllowedClockSkewSeconds(10).build();
     }
 
     private String generateToken(String email, long ttlMillis, Map<String, Object> claims) {

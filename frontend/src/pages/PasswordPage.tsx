@@ -4,6 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {IPasswordUpdate} from "../interfaces/auth/IPasswordUpdate";
 import {setManagerPassword} from "../api/authService";
 import ErrorComponent from "../components/ErrorComponent";
+import {logout} from "../api/utils/tokenUtil";
 
 
 const PasswordPage = () => {
@@ -21,8 +22,7 @@ const PasswordPage = () => {
         setManagerPassword(token!, data)
             .then(() => {
                 alert("Password was set. You can now log in using it");
-                localStorage.clear();
-                navigate("/");
+                logout();
             })
             .catch((error) => {
                 setError(error.message);

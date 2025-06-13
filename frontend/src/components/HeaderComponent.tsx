@@ -1,18 +1,12 @@
 import React, {FC} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
-import {getUserName, getUserRole} from "../api/utils/tokenUtil";
+import {getUserName, getUserRole, logout} from "../api/utils/tokenUtil";
 
 const HeaderComponent: FC = () => {
-    const navigate = useNavigate();
     const username = getUserName();
     const role = getUserRole();
     const isAdmin = role === "ROLE_ADMIN";
-
-    const onLogout = () => {
-        localStorage.clear();
-        navigate("/");
-    };
 
     return (
         <div className="d-flex justify-content-end align-items-center bg-success-subtle shadow-sm">
@@ -27,7 +21,7 @@ const HeaderComponent: FC = () => {
                     </li>
                 }
                 <li>
-                    <Button className="btn btn-success m-2 fs-6" onClick={onLogout}>Log out</Button>
+                    <Button className="btn btn-success m-2 fs-6" onClick={logout}>Log out</Button>
                 </li>
             </ul>
         </div>
